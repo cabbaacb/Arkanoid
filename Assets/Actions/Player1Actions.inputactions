@@ -22,6 +22,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "FreeTheBall",
+                    "type": "Button",
+                    "id": "ea91271b-6bd0-4da1-b66d-312407495d4a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -39,7 +48,7 @@
                 {
                     "name": "negative",
                     "id": "ca453f4c-d652-4197-9cee-6f067f17bc21",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -50,7 +59,7 @@
                 {
                     "name": "positive",
                     "id": "3a6d8fb4-6a73-426d-b50e-bde748b44955",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -72,7 +81,7 @@
                 {
                     "name": "negative",
                     "id": "8e726a2c-af40-4f46-b134-0b834bafffe7",
-                    "path": "<Keyboard>/w",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -83,13 +92,24 @@
                 {
                     "name": "positive",
                     "id": "88468350-ddcb-4b8d-bbf4-02fac519a888",
-                    "path": "<Keyboard>/s",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "MovingVertical",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "25af1553-4e86-4909-bc5a-2d83a8dfd39f",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FreeTheBall",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

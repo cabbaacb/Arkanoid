@@ -44,6 +44,15 @@ public partial class @Player1Actions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FreeTheBall"",
+                    ""type"": ""Button"",
+                    ""id"": ""ea91271b-6bd0-4da1-b66d-312407495d4a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -61,7 +70,7 @@ public partial class @Player1Actions : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""ca453f4c-d652-4197-9cee-6f067f17bc21"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -72,7 +81,7 @@ public partial class @Player1Actions : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""3a6d8fb4-6a73-426d-b50e-bde748b44955"",
-                    ""path"": ""<Keyboard>/d"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -94,7 +103,7 @@ public partial class @Player1Actions : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""8e726a2c-af40-4f46-b134-0b834bafffe7"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -105,13 +114,24 @@ public partial class @Player1Actions : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""88468350-ddcb-4b8d-bbf4-02fac519a888"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MovingVertical"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""25af1553-4e86-4909-bc5a-2d83a8dfd39f"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FreeTheBall"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -122,6 +142,7 @@ public partial class @Player1Actions : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_MovingHorizontal = m_Player.FindAction("MovingHorizontal", throwIfNotFound: true);
         m_Player_MovingVertical = m_Player.FindAction("MovingVertical", throwIfNotFound: true);
+        m_Player_FreeTheBall = m_Player.FindAction("FreeTheBall", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -183,12 +204,14 @@ public partial class @Player1Actions : IInputActionCollection2, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_MovingHorizontal;
     private readonly InputAction m_Player_MovingVertical;
+    private readonly InputAction m_Player_FreeTheBall;
     public struct PlayerActions
     {
         private @Player1Actions m_Wrapper;
         public PlayerActions(@Player1Actions wrapper) { m_Wrapper = wrapper; }
         public InputAction @MovingHorizontal => m_Wrapper.m_Player_MovingHorizontal;
         public InputAction @MovingVertical => m_Wrapper.m_Player_MovingVertical;
+        public InputAction @FreeTheBall => m_Wrapper.m_Player_FreeTheBall;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -204,6 +227,9 @@ public partial class @Player1Actions : IInputActionCollection2, IDisposable
                 @MovingVertical.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovingVertical;
                 @MovingVertical.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovingVertical;
                 @MovingVertical.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovingVertical;
+                @FreeTheBall.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeTheBall;
+                @FreeTheBall.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeTheBall;
+                @FreeTheBall.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeTheBall;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -214,6 +240,9 @@ public partial class @Player1Actions : IInputActionCollection2, IDisposable
                 @MovingVertical.started += instance.OnMovingVertical;
                 @MovingVertical.performed += instance.OnMovingVertical;
                 @MovingVertical.canceled += instance.OnMovingVertical;
+                @FreeTheBall.started += instance.OnFreeTheBall;
+                @FreeTheBall.performed += instance.OnFreeTheBall;
+                @FreeTheBall.canceled += instance.OnFreeTheBall;
             }
         }
     }
@@ -222,5 +251,6 @@ public partial class @Player1Actions : IInputActionCollection2, IDisposable
     {
         void OnMovingHorizontal(InputAction.CallbackContext context);
         void OnMovingVertical(InputAction.CallbackContext context);
+        void OnFreeTheBall(InputAction.CallbackContext context);
     }
 }
