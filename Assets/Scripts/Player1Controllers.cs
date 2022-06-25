@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player1Controllers : MonoBehaviour
 {
-    [SerializeField] private float _speed;
+    [SerializeField, Tooltip("Player1's speed")] private float _speed;
     [SerializeField] private Rigidbody _rigidBody;
 
     private Player1Actions _playerActions;
@@ -52,7 +52,6 @@ public class Player1Controllers : MonoBehaviour
         Vector3 movingHorizontal = transform.forward * _speed * horizontalInput * Time.fixedDeltaTime;
         Vector3 movingVertical = transform.right * _speed * verticalInput * Time.fixedDeltaTime;
 
-        //_rigidBody.MovePosition(_rigidBody.position + movingHorizontal + movingVertical);
         _rigidBody.AddForce(movingHorizontal + movingVertical, ForceMode.Impulse);
     }
 
@@ -61,8 +60,8 @@ public class Player1Controllers : MonoBehaviour
         if (start)
         {
             print("GameRestart");
+            _rigidBody.velocity = Vector3.zero;
             _playerActions.Player.FreeTheBall.performed += _ => OnStartTheBall?.Invoke(true);
         }
-        //await Task.Yield();
     }
 }

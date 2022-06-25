@@ -20,7 +20,7 @@ public class HealthScript : MonoBehaviour
 
         if(_player.Health <= 0)
         {
-            _textBox.text = "You're dead!";
+            _textBox.text = "You're dead!\n(but still can play)";
         }
     }
 }

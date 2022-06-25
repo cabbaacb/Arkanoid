@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player2Controllers : MonoBehaviour
 {
-    [SerializeField] private float _speed;
+    [SerializeField, Tooltip("Player2's speed")] private float _speed;
     [SerializeField] private Rigidbody _rigidBody;
 
     private Player2Actions _playerActions;

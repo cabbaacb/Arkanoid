@@ -4,25 +4,23 @@ using UnityEngine;
 
 public class BallBehaviour : MonoBehaviour
 {
-    [SerializeField, Range(10, 100)] private float _speed = 15;
+    [SerializeField, Range(1, 25), Tooltip("Ball Speed")] private float _speed = 1f;
     [SerializeField] private PlayerController _player1;
-    [SerializeField] private Rigidbody _rigidbody;
+   
+    [SerializeField, Tooltip("Direction Vector")] private Vector3 _movingDirection;
 
-    private float _minVelocity = 10;
+    private float _minVelocity = 1;
+    private float _maxVelocity = 25;
 
     public delegate void BallRestartHandler(bool start);
     public static event BallRestartHandler OnBallRestart;
-
-    private Vector3 _lastFrameVelocity;
-    private void Awake()
-    {
-        _rigidbody = GetComponent<Rigidbody>();
-    }
+      
 
     private void Start()
     {
         Restart();
         OnBallRestart?.Invoke(true);
+        
     }        
 
     private void OnEnable()
@@ -39,20 +37,32 @@ public class BallBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _lastFrameVelocity = _rigidbody.velocity;
+        Moving(_movingDirection);
     }
 
     private void Restart()
     {
-        _rigidbody.velocity = Vector3.zero;
-        transform.position = new Vector3(_player1.transform.position.x, 10f, _player1.transform.position.z);
+        StartCoroutine(SpeedIncreasing());
+        _movingDirection = Vector3.zero;
+        _speed = _minVelocity;
+        transform.Translate(Vector3.zero);
+        transform.position = new Vector3(_player1.transform.position.x, 9.5f, _player1.transform.position.z);
     }
 
     private void StartMoving(bool start)
     {
         OnBallRestart?.Invoke(false);
-        _rigidbody.AddForce(new Vector3(0, -1, 0) * _speed, ForceMode.Acceleration);
+
+        _movingDirection = new Vector3(0, -1, 0) * _speed;       
         
+    }
+
+    private IEnumerator SpeedIncreasing()
+    {
+        if (_speed != _maxVelocity)
+            _speed += 0.5f;
+        yield return new WaitForSeconds(5f);
+        StartCoroutine(SpeedIncreasing());
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -73,17 +83,25 @@ public class BallBehaviour : MonoBehaviour
         }
 
 
-        Reflection(collision.contacts[0].normal);
+        _movingDirection = Reflection(collision.contacts[0].normal);
 
     }
 
 
-    private void Reflection(Vector3 collisionNormal)
+    private Vector3 Reflection(Vector3 collisionNormal)
     {
-        var speed = _lastFrameVelocity.magnitude;
-        var direction = Vector3.Reflect(_lastFrameVelocity.normalized, collisionNormal.normalized);
-        _rigidbody.velocity = direction * Mathf.Max(_speed, _minVelocity) * 0.5f;
+
+        var direction = Vector3.Reflect(_movingDirection.normalized, collisionNormal.normalized);
+
+        return direction * Mathf.Max(_speed, _minVelocity);
+
     }
 
+    private void Moving(Vector3 direction)
+    {
+        transform.Translate(direction * Time.deltaTime);
+    }
+
+   
 
 }
