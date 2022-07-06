@@ -16,7 +16,7 @@ public class HealthScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _textBox.text = "Health: " + _player.Health.ToString();
+        _textBox.text = ": " + _player.Health.ToString();
 
         if(_player.Health <= 0)
         {
