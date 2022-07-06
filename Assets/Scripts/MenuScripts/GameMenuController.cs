@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+﻿
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameMenuController : MonoBehaviour
 {
@@ -25,16 +24,11 @@ public class GameMenuController : MonoBehaviour
         _newGameButton.onClick.RemoveAllListeners();
         _exitButton.onClick.RemoveAllListeners();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+       
 
     private void StartNewGame()
     {
-
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private void ExitGame()
