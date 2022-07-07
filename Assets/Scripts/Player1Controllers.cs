@@ -7,6 +7,8 @@ public class Player1Controllers : MonoBehaviour
 {
     [SerializeField, Tooltip("Player1's speed")] private float _speed;
     [SerializeField] private Rigidbody _rigidBody;
+    [SerializeField] private PauseButton _pauseButton;
+
 
     private Player1Actions _playerActions;
 
@@ -23,6 +25,9 @@ public class Player1Controllers : MonoBehaviour
     private void FixedUpdate()
     {
         Moving();
+
+        if(_playerActions.Player.Pause.IsPressed())
+            _pauseButton.OpenPausePanel();       
     }
 
     private void OnEnable()
@@ -30,8 +35,14 @@ public class Player1Controllers : MonoBehaviour
         _playerActions.Enable();
         BallBehaviour.OnBallRestart += GameRestart;
 
-
     }
+
+    /*
+    private void PauseGame()
+    {
+        _pauseButton.OpenPausePanel();
+    }
+    */
 
     private void OnDisable()
     {

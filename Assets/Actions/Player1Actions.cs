@@ -53,6 +53,15 @@ public partial class @Player1Actions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""0ba6abee-8903-43aa-9755-3eb447d1dce1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -132,6 +141,17 @@ public partial class @Player1Actions : IInputActionCollection2, IDisposable
                     ""action"": ""FreeTheBall"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4effa515-0a3f-4049-b3e9-28b35a8e2a50"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -143,6 +163,7 @@ public partial class @Player1Actions : IInputActionCollection2, IDisposable
         m_Player_MovingHorizontal = m_Player.FindAction("MovingHorizontal", throwIfNotFound: true);
         m_Player_MovingVertical = m_Player.FindAction("MovingVertical", throwIfNotFound: true);
         m_Player_FreeTheBall = m_Player.FindAction("FreeTheBall", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -205,6 +226,7 @@ public partial class @Player1Actions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_MovingHorizontal;
     private readonly InputAction m_Player_MovingVertical;
     private readonly InputAction m_Player_FreeTheBall;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @Player1Actions m_Wrapper;
@@ -212,6 +234,7 @@ public partial class @Player1Actions : IInputActionCollection2, IDisposable
         public InputAction @MovingHorizontal => m_Wrapper.m_Player_MovingHorizontal;
         public InputAction @MovingVertical => m_Wrapper.m_Player_MovingVertical;
         public InputAction @FreeTheBall => m_Wrapper.m_Player_FreeTheBall;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -230,6 +253,9 @@ public partial class @Player1Actions : IInputActionCollection2, IDisposable
                 @FreeTheBall.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeTheBall;
                 @FreeTheBall.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeTheBall;
                 @FreeTheBall.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeTheBall;
+                @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -243,6 +269,9 @@ public partial class @Player1Actions : IInputActionCollection2, IDisposable
                 @FreeTheBall.started += instance.OnFreeTheBall;
                 @FreeTheBall.performed += instance.OnFreeTheBall;
                 @FreeTheBall.canceled += instance.OnFreeTheBall;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -252,5 +281,6 @@ public partial class @Player1Actions : IInputActionCollection2, IDisposable
         void OnMovingHorizontal(InputAction.CallbackContext context);
         void OnMovingVertical(InputAction.CallbackContext context);
         void OnFreeTheBall(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }
