@@ -14,6 +14,7 @@ public class GameStateManager : MonoBehaviour
         get
         {
             if (_instance == null)
+                
                 _instance = new GameStateManager();
 
             return _instance;
