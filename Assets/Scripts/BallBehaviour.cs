@@ -67,7 +67,7 @@ public class BallBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if ((collision.gameObject.name == "Gates1") || (collision.gameObject.name == "Gates2"))
+        if (collision.gameObject.name == "Gates1")  // || (collision.gameObject.name == "Gates2"))
         {
             Restart();
             OnBallRestart?.Invoke(true);
@@ -77,7 +77,8 @@ public class BallBehaviour : MonoBehaviour
 
         else if ((collision.gameObject.name != "Player1") && (collision.gameObject.name != "Player2")
             && (collision.gameObject.name != "Wall1") && (collision.gameObject.name != "Wall2")
-            && (collision.gameObject.name != "Wall3") && (collision.gameObject.name != "Wall4"))
+            && (collision.gameObject.name != "Wall3") && (collision.gameObject.name != "Wall4")
+            && (collision.gameObject.name != "Gates2"))
         {
             Destroy(collision.gameObject);
         }
